@@ -40,8 +40,8 @@ def booking_element(request, id):
 @api_view(['GET', 'POST', 'PUT'])
 def booking_list(request):
 	if request.method == 'GET':
-		bs = Booking.objects.filter(coupon_availed=False)
-		serializer = BookingListSerializer(bs, many=True)
+		bs = Booking.objects.latest('id')
+		serializer = BookingListSerializer(bs)
 		return Response(serializer.data)
 	elif request.method == 'POST':
 		serializer = BookingSerializer(data=request.data)
